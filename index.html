@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heart Galaxy for You ❤️</title>
+    <title>Una Galaxia de Amor para Ti ❤️</title>
     <style>
         body {
             margin: 0;
@@ -21,26 +20,38 @@
             transform: translate(-50%, -50%);
             z-index: 10;
             transition: opacity 1s ease;
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
         }
         h1 {
-            font-size: 2rem;
+            font-size: 1.6rem;
             color: #ff69b4;
             margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
         }
         p {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             color: #ddd;
             margin-bottom: 20px;
+            letter-spacing: 1px;
         }
         button {
             background-color: #ff1493;
             color: white;
             border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
+            padding: 12px 26px;
+            font-size: 0.95rem;
             border-radius: 25px;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(255, 20, 147, 0.6);
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.8);
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #ff69b4;
         }
         #canvas-container {
             position: absolute;
@@ -54,14 +65,12 @@
 </head>
 <body>
 
-    <!-- ပထမဆုံးပေါ်မည့် စာသားနှင့် ခလုတ် (ဤနေရာတွင် သင်ကြိုက်သည့် စာသားပြောင်းနိုင်သည်) -->
     <div id="intro">
         <h1>Una Galaxia de Amor para Ti</h1>
         <p>FELIZ CUMPLEANOS, MI VIDA</p>
         <button onclick="startExperience()">ENTRAR A NUESTRO UNIVERSO</button>
     </div>
 
-    <!-- 3D နှလုံးသား ဂယ်လက်ဆီ ပေါ်မည့်နေရာ -->
     <div id="canvas-container"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -84,40 +93,42 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             container.appendChild(renderer.domElement);
 
-            // နှလုံးပုံစံ အစက်များနှင့် ဂယ်လက်ဆီ ဖန်တီးခြင်း
-            const particlesCount = 3000;
+            // နှလုံးသားပုံစံ 3D ဂယ်လက်ဆီ အစက်များ ဖန်တီးခြင်း
+            const particlesCount = 6000;
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(particlesCount * 3);
 
             for (let i = 0; i < particlesCount; i++) {
-                // နှလုံးပုံသဏ္ဌာန် သင်္ချာညီမျှခြင်း
                 const t = Math.random() * Math.PI * 2;
-                const x = 16 * Math.pow(Math.sin(t), 3);
+                
+                // 3D Heart Math Formula
+                const x = 16 * Math.sin(t) * Math.sin(t) * Math.sin(t);
                 const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
                 const z = (Math.random() - 0.5) * 10;
 
-                positions[i * 3] = x * 0.8;
-                positions[i * 3 + 1] = y * 0.8;
+                positions[i * 3] = x * 0.75;
+                positions[i * 3 + 1] = y * 0.75;
                 positions[i * 3 + 2] = z;
             }
 
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
             
             const material = new THREE.PointsMaterial({
-                size: 0.15,
-                color: 0xff69b4,
+                size: 0.13,
+                color: 0xff3399,
                 transparent: true,
-                opacity: 0.8
+                opacity: 0.9
             });
 
             const heartParticles = new THREE.Points(geometry, material);
             scene.add(heartParticles);
 
-            camera.position.z = 30;
+            camera.position.z = 25;
 
             function animate() {
                 requestAnimationFrame(animate);
                 heartParticles.rotation.y += 0.01;
+                heartParticles.rotation.x += 0.002;
                 renderer.render(scene, camera);
             }
             animate();
@@ -131,3 +142,5 @@
     </script>
 </body>
 </html>
+
+
